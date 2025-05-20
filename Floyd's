@@ -1,0 +1,54 @@
+using System;
+
+class GfG
+{
+    static void floydWarshall(int[,] dist)
+    {
+        int V = dist.GetLength(0);
+
+        for (int k = 0; k < V; k++)
+        {
+            for (int i = 0; i < V; i++)
+            {
+                for (int j = 0; j < V; j++)
+                {
+                    // shortest path from
+                    // i to j 
+                if(dist[i,k] != 1e8 && dist[k, j]!= 1e8)
+                   dist[i,j] = Math.Min(dist[i, j], dist[i, k] + dist[k, j]);
+                }
+            }
+        }
+    }
+    // large number as "infinity"
+    const int INF = 100000000; 
+
+    static void Main()
+    {
+        int[,] dist = {
+            {0, 4, INF, 5, INF},
+            {INF, 0, 1, INF, 6},
+            {2, INF, 0, 3, INF},
+            {INF, INF, 1, 0, 2},
+            {1, INF, INF, 4, 0}
+        };
+
+        floydWarshall(dist);
+
+        for (int i = 0; i < dist.GetLength(0); i++)
+        {
+            for (int j = 0; j < dist.GetLength(1); j++)
+            {
+                    Console.Write(dist[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+output:
+0 4 5 5 7 
+3 0 1 4 6 
+2 6 0 3 5 
+3 7 1 0 2 
+1 5 5 4 0
