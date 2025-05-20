@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 100
+
+void printBoard(int board[MAX][MAX], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+bool isSafe(int board[MAX][MAX], int row, int col, int n) {
+    for (int i = 0; i < row; i++) {
+        if (board[i][col] == 1) {
+            return false;
+        }
+    }
+
+    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j] == 1) {
+            return false;
+        }
+    }
+
+    for (int i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+        if (board[i][j] == 1) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool solveNQueens(int board[MAX][MAX], int row, int n) {
+    if (row == n) {
+        return true;
+    }
+
+    for (int col = 0; col < n; col++) {
+        if (isSafe(board, row, col, n)) {
+            board[row][col] = 1;
+
+            if (solveNQueens(board, row + 1, n)) {
+                return true;
+            }
+
+            board[row][col] = 0;
+        }
+    }
+
+    return false;
+}
+
+int main() {
+    int n;
+    printf("Enter the value of N: ");
+    scanf("%d", &n);
+
+    int board[MAX][MAX] = {0};  
+
+    if (solveNQueens(board, 0, n)) {
+        printf("Solution to the %d-Queens problem:\n", n);
+        printBoard(board, n);
+    } else {
+        printf("No solution exists for the %d-Queens problem.\n", n);
+    }
+
+    return 0;
+}
+
+
+OUTPUT:
+Enter the value of N: 9
+Solution to the 9-Queens problem:
+1 0 0 0 0 0 0 0 0 
+0 0 1 0 0 0 0 0 0 
+0 0 0 0 0 1 0 0 0 
+0 0 0 0 0 0 0 1 0 
+0 1 0 0 0 0 0 0 0 
+0 0 0 1 0 0 0 0 0 
+0 0 0 0 0 0 0 0 1 
+0 0 0 0 0 0 1 0 0 
+0 0 0 0 1 0 0 0 0 
