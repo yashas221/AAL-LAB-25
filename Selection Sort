@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+int main() {
+int num;
+printf("Enter the num of elements:");
+scanf("%d",&num);
+printf("Enter %d elements:",num);
+int arr[num];
+for (int i = 0; i < num; i++) {
+        scanf("%d", &arr[i]);
+    }
+int i,j,index,temp;
+for(i=0;i<num;i++){
+    temp=0;
+    index=i;
+    for(j=i+1;j<num;j++){
+        if( arr[j]<arr[index]){
+            temp=arr[j];
+            arr[j]=arr[index];
+            arr[index]=temp;
+            j=index;
+        }
+    }
+}
+printf("Array after selection sort:");
+for(i = 0; i < num; i++) {
+    printf("%d ", arr[i]);
+
+
+}
+return 0;
+}
+
+OUTPUT:
+Enter the num of elements:6
+Enter 6 elements:12 45 23 97 1 56
+Array after selection sort:1 12 23 45 56 97 
